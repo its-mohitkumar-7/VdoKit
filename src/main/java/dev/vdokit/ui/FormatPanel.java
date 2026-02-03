@@ -3,7 +3,9 @@ package dev.vdokit.ui;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import dev.vdokit.platform.PlatformDetector;
+
+import dev.vdokit.request.FormatRequest;
+import dev.vdokit.core.ProcessRunner;
 
 
 public class FormatPanel extends JPanel {
@@ -12,6 +14,9 @@ public class FormatPanel extends JPanel {
 	JComboBox<String> videoFormatChooser;
 	JButton formatButton;
 	JButton mainMenuButton;
+	
+	File videoFilePath;
+	String videoFormatType;
 	
 	public FormatPanel(){
 		
@@ -27,16 +32,28 @@ public class FormatPanel extends JPanel {
 			JFileChooser jFileChooser = new JFileChooser();
 			int response = jFileChooser.showOpenDialog(this);
 			if(response == JFileChooser.APPROVE_OPTION){
-				File videoFilePath = jFileChooser.getSelectedFile();
+				videoFilePath = jFileChooser.getSelectedFile();
 			} else System.out.println("Please Select a video file");// else case
 		});
 		
 		videoFormatChooser.addActionListener(e -> {
-			System.out.println(videoFormatChooser.getSelectedItem());// jcombobox
+			videoFormatType = (String) videoFormatChooser.getSelectedItem();  // jcombobox
 		});
 		
 		formatButton.addActionListener(e -> {
-			System.out.println(PlatformDetector.getBinary());
+		
+			FormatRequest formatRequest = new FormatRequest();
+			
+			formatRequest.setVideoInputPath(videoFilePath.getAbsolutePath());
+			formatRequest.setVideoFormatType(videoFormatType);
+			
+			try{
+				ProcessRunner.run(formatRequest.buildCommand());
+			} catch(Exception exception){
+				exception.printStackTrace();
+			}	
+			
+				
 		});
 		
 		// panel attributes
