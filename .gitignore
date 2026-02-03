@@ -1,0 +1,25 @@
+# Build output
+/build/
+
+# Java compiled files
+*.class
+
+# FFmpeg Linux binaries (folder structure kept)
+src/resources/ffmpeg/linux/ffmpeg
+src/resources/ffmpeg/linux/ffprobe
+
+# FFmpeg Windows binaries (folder structure kept)
+src/resources/ffmpeg/windows/*.exe
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
