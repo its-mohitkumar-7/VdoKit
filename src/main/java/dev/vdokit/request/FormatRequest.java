@@ -13,15 +13,15 @@ public class FormatRequest{
 	public List<String> buildCommand(){
 		
 		List<String> cmd = new ArrayList<>();
+		
 		cmd.add(PlatformDetector.getBinary());
 		cmd.add("-i");
 		cmd.add(videoFilePath);
-		cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('.') + 1 ) + videoFormatType);
+		cmd.add("VdoKit" + videoFilePath.substring(0, videoFilePath.lastIndexOf('.') + 1 ) + videoFormatType);
 		
 		return cmd;
 	
 	}
-	
 	
 	
 	

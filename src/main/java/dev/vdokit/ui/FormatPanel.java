@@ -36,9 +36,11 @@ public class FormatPanel extends JPanel {
 			} else System.out.println("Please Select a video file");// else case
 		});
 		
+		
 		videoFormatChooser.addActionListener(e -> {
 			videoFormatType = (String) videoFormatChooser.getSelectedItem();  // jcombobox
 		});
+		
 		
 		formatButton.addActionListener(e -> {
 		
