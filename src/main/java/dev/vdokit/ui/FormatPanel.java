@@ -22,9 +22,13 @@ public class FormatPanel extends JPanel {
 		
 		 
 		videoFileChooser = new JButton("Choose video");
-		videoFormatChooser = new JComboBox<>(new String[] {"mp4","avi","mov"});
 		formatButton = new JButton("Format");
-		mainMenuButton = new JButton("Main Menu");	
+		mainMenuButton = new JButton("Main Menu");
+		
+		videoFormatChooser = new JComboBox<>(new String[] {"mp4","avi","mov"});
+		videoFormatChooser.setSelectedIndex(0);
+		videoFormatType = (String) videoFormatChooser.getSelectedItem();
+		
 		
 		
 		// button listener setup
@@ -34,11 +38,6 @@ public class FormatPanel extends JPanel {
 			if(response == JFileChooser.APPROVE_OPTION){
 				videoFilePath = jFileChooser.getSelectedFile();
 			} else System.out.println("Please Select a video file");// else case
-		});
-		
-		
-		videoFormatChooser.addActionListener(e -> {
-			videoFormatType = (String) videoFormatChooser.getSelectedItem();  // jcombobox
 		});
 		
 		

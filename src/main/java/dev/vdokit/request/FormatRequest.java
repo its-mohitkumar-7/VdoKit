@@ -17,7 +17,8 @@ public class FormatRequest{
 		cmd.add(PlatformDetector.getBinary());
 		cmd.add("-i");
 		cmd.add(videoFilePath);
-		cmd.add("VdoKit" + videoFilePath.substring(0, videoFilePath.lastIndexOf('.') + 1 ) + videoFormatType);
+		cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + videoFormatType);
+
 		
 		return cmd;
 	
