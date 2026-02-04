@@ -11,9 +11,11 @@ import dev.vdokit.core.ProcessRunner;
 public class FormatPanel extends JPanel {
 
 	JButton videoFileChooser;
-	JComboBox<String> videoFormatChooser;
 	JButton formatButton;
 	JButton mainMenuButton;
+	JComboBox<String> videoFormatChooser;
+	String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","3g2","ts","m2ts","mts","mpeg","mpg","vob","ogv","f4v","rm","rmvb","divx","mxf","gxf","dv","nut","mjpeg","mjpg","y4m","gif"};
+
 	
 	File videoFilePath;
 	String videoFormatType;
@@ -25,7 +27,7 @@ public class FormatPanel extends JPanel {
 		formatButton = new JButton("Format");
 		mainMenuButton = new JButton("Main Menu");
 		
-		videoFormatChooser = new JComboBox<>(new String[] {"mp4","avi","mov"});
+		videoFormatChooser = new JComboBox<>(allFormats);
 		videoFormatChooser.setSelectedIndex(0);
 		videoFormatType = (String) videoFormatChooser.getSelectedItem();
 		
