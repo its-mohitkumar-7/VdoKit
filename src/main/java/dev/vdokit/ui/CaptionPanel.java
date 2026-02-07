@@ -99,6 +99,14 @@ public class CaptionPanel extends JPanel{
 		
 			CaptionRequest captionRequest = new CaptionRequest();
 			
+			if(videoFilePath == null){
+				JOptionPane.showMessageDialog(this, "Please select video first");
+				return;
+			} else if(captionFilePath == null){
+				JOptionPane.showMessageDialog(this, "Please select caption file first");
+				return;
+			}
+			
 			captionRequest.setVideoFilePath(videoFilePath.getAbsolutePath());
 			captionRequest.setCaptionFilePath(captionFilePath.getAbsolutePath());
 			captionRequest.setHardEmbeddingEnabled(hardEmbeddingEnabled);

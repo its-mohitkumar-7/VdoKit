@@ -39,13 +39,18 @@ public class FormatPanel extends JPanel {
 			int response = jFileChooser.showOpenDialog(this);
 			if(response == JFileChooser.APPROVE_OPTION){
 				videoFilePath = jFileChooser.getSelectedFile();
-			} else System.out.println("Please Select a video file");// else case
+			}
 		});
 		
 		
 		formatButton.addActionListener(e -> {
 		
 			FormatRequest formatRequest = new FormatRequest();
+			
+			if(videoFilePath == null){
+				JOptionPane.showMessageDialog(this, "Please select video first");
+				return;
+			}
 			
 			formatRequest.setVideoInputPath(videoFilePath.getAbsolutePath());
 			formatRequest.setVideoFormatType(videoFormatType);
