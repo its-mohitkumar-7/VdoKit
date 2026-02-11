@@ -19,6 +19,7 @@ public class CaptionRequest{
 		
 		if(hardEmbeddingEnabled){
 			cmd.add(PlatformDetector.getBinary());
+			cmd.add("-y");
 			cmd.add("-i");
 			cmd.add(videoFilePath);
 			cmd.add("-vf");
@@ -29,6 +30,7 @@ public class CaptionRequest{
 		
 		else if(outputVideoFormat.toLowerCase().contains("mkv")){
 			cmd.add(PlatformDetector.getBinary());
+			cmd.add("-y");
 			cmd.add("-i");
 			cmd.add(videoFilePath);
 			cmd.add("-i");
@@ -41,6 +43,7 @@ public class CaptionRequest{
 		
 		else if(outputVideoFormat.toLowerCase().contains("webm")){
 			cmd.add(PlatformDetector.getBinary());
+			cmd.add("-y");
 			cmd.add("-i");
 			cmd.add(videoFilePath);
 			cmd.add("-i");
@@ -57,6 +60,7 @@ public class CaptionRequest{
 		
 		else {
 			cmd.add(PlatformDetector.getBinary());
+			cmd.add("-y");
 			cmd.add("-i");
 			cmd.add(videoFilePath);
 			cmd.add("-i");

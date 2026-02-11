@@ -1,4 +1,4 @@
-package dev.vdokit.ui;
+ package dev.vdokit.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,26 +9,34 @@ import dev.vdokit.core.ProcessRunner;
 
 public class CaptionPanel extends JPanel{
 
-	public JButton videoFileChooser;
-	public JButton captionFileChooser;
-	public JButton embedButton;
+	private JButton videoFileChooser;
+	private JButton captionFileChooser;
+	private JButton embedButton;
 	public JButton mainMenuButton;
 	
-	public JRadioButton softEmbedding;
-	public JRadioButton hardEmbedding;
+	private JRadioButton softEmbedding;
+	private JRadioButton hardEmbedding;
 	
-	public String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","ts","mts","m2ts","mpeg","vob","ogv"};
+	private String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","ts","mts","m2ts","mpeg","vob","ogv"};
 	
-	public JComboBox<String> outputVideoFormatChooser;
+	private JComboBox<String> outputVideoFormatChooser;
+	
+	private CardLayout cardLayout;
+	private JPanel container;
+	private ProgressPanel progressPanel;
 	
 	// choice variables
-	public File videoFilePath;
-	public File captionFilePath;
-	public boolean hardEmbeddingEnabled;
-	public String outputVideoFormat;
+	private File videoFilePath;
+	private File captionFilePath;
+	private boolean hardEmbeddingEnabled;
+	private String outputVideoFormat;
 	
 	
-	public CaptionPanel(){
+	public CaptionPanel(CardLayout cardLayout, JPanel container, ProgressPanel progressPanel){
+	
+		this.cardLayout = cardLayout;
+		this.container = container;
+		this.progressPanel = progressPanel;
 		
 		videoFileChooser = new JButton("Choose Video");
 		captionFileChooser = new JButton("Choose Caption");
@@ -95,6 +103,13 @@ public class CaptionPanel extends JPanel{
 		});
 		
 		
+		outputVideoFormatChooser.addActionListener(e -> {
+		
+    		outputVideoFormat = (String) outputVideoFormatChooser.getSelectedItem();
+    		
+		});
+
+		
 		embedButton.addActionListener(e -> {
 		
 			CaptionRequest captionRequest = new CaptionRequest();
@@ -102,7 +117,8 @@ public class CaptionPanel extends JPanel{
 			if(videoFilePath == null){
 				JOptionPane.showMessageDialog(this, "Please select video first");
 				return;
-			} else if(captionFilePath == null){
+			}
+			if(captionFilePath == null){
 				JOptionPane.showMessageDialog(this, "Please select caption file first");
 				return;
 			}
@@ -112,12 +128,32 @@ public class CaptionPanel extends JPanel{
 			captionRequest.setHardEmbeddingEnabled(hardEmbeddingEnabled);
 			captionRequest.setOutputVideoFormat(outputVideoFormat);
 			
-			try{ ProcessRunner.run(captionRequest.buildCommand());
-			} catch (Exception exception){
-				exception.printStackTrace();
-			} 
-		
-		});
+			progressPanel.showProgress("Embedding Captions...");
+			cardLayout.show(container, "PROGRESSPANEL");
+			
+			SwingWorker<Void, Void> swingWorker = new SwingWorker<>() {
+			
+				@Override
+                protected Void doInBackground() throws Exception {
+                    ProcessRunner.run(captionRequest.buildCommand());
+                    return null;
+                }
+                
+                @Override
+                protected void done() {
+                    progressPanel.hideProgress();
+                    cardLayout.show(container, "CAPTIONPANEL");
+                    try {
+                        get();
+                        JOptionPane.showMessageDialog(CaptionPanel.this, "Embedding completed!");
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                        JOptionPane.showMessageDialog(CaptionPanel.this, "Error: " + exception.getMessage());
+                    }
+                }
+            };
+            swingWorker.execute();
+        });
 
 		
 		

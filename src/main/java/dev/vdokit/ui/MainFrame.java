@@ -12,21 +12,24 @@ public class MainFrame extends JFrame {
 	private MainPanel mainPanel;
 	private FormatPanel formatPanel;
 	private CaptionPanel captionPanel;
+	private ProgressPanel progressPanel;
 	
 	public MainFrame(){
-	
-		//panels
-		mainPanel = new MainPanel();
-		formatPanel = new FormatPanel();
-		captionPanel = new CaptionPanel();
 	
 		//cardlayout
 		cardLayout = new CardLayout();
 		container = new JPanel(cardLayout);
+	
+		//panels
+		mainPanel = new MainPanel();
+		progressPanel = new ProgressPanel();
+		formatPanel = new FormatPanel(cardLayout, container, progressPanel);
+		captionPanel = new CaptionPanel(cardLayout, container, progressPanel);
 		
 		container.add(mainPanel,"MAINPANEL");
 		container.add(formatPanel,"FORMATPANEL");
 		container.add(captionPanel,"CAPTIONPANEL");
+		container.add(progressPanel, "PROGRESSPANEL");
 		
 		
 		//button press logic
@@ -57,9 +60,9 @@ public class MainFrame extends JFrame {
 		setTitle("VdoKit");
 		setSize(800,600);
 		setLayout(new FlowLayout());
+		add(container);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(icon.getImage());
-		add(container);
 		setVisible(true);
 	}
 }

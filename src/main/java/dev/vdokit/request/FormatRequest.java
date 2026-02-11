@@ -15,6 +15,7 @@ public class FormatRequest{
 		List<String> cmd = new ArrayList<>();
 		
 		cmd.add(PlatformDetector.getBinary());
+		cmd.add("-y");
 		cmd.add("-i");
 		cmd.add(videoFilePath);
 		cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + videoFormatType);
