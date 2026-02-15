@@ -2,6 +2,7 @@ package dev.vdokit.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 
 import dev.vdokit.request.FormatRequest;
@@ -15,6 +16,10 @@ public class FormatPanel extends JPanel {
 	public JButton mainMenuButton;
 	private JComboBox<String> videoFormatChooser;
 	private String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","3g2","ts","m2ts","mts","mpeg","mpg","vob","ogv","f4v","rm","rmvb","divx","mxf","gxf","dv","nut","mjpeg","mjpg","y4m","gif"};
+	private JComboBox<String> resizeOutputVideoChooser;
+	private String[] allResolutions = {"256:144","426:240","640:360","854:480","960:540","1024:576","1280:720","1366:768","1600:900","1920:1080","2048:1080","2560:1440","3200:1800","3840:2160","4096:2160","5120:2880","7680:4320"};
+	
+	private JCheckBox resizeOutputVideoCheckbox;
 
 	private CardLayout cardLayout;
 	private JPanel container;
@@ -23,6 +28,7 @@ public class FormatPanel extends JPanel {
 	//choice variables
 	File videoFilePath;
 	String videoFormatType;
+	String resizeOutputVideo;
 	
 	public FormatPanel(CardLayout cardLayout, JPanel container, ProgressPanel progressPanel){
 	
@@ -36,8 +42,11 @@ public class FormatPanel extends JPanel {
 		
 		videoFormatChooser = new JComboBox<>(allFormats);
 		videoFormatChooser.setSelectedIndex(0);
-		videoFormatType = (String) videoFormatChooser.getSelectedItem();
+		resizeOutputVideoChooser = new JComboBox<>(allResolutions);
+		resizeOutputVideoChooser.setSelectedIndex(0);
+		resizeOutputVideoChooser.setVisible(false);
 		
+		resizeOutputVideoCheckbox = new JCheckBox("Scale");
 		
 		
 		// button listener setup
@@ -53,6 +62,15 @@ public class FormatPanel extends JPanel {
 		});
 		
 		
+		resizeOutputVideoCheckbox.addItemListener(e -> {
+		
+			if(e.getStateChange() == ItemEvent.SELECTED){
+				resizeOutputVideoChooser.setVisible(true);
+			} else resizeOutputVideoChooser.setVisible(false);
+		
+		});
+		
+		
 		formatButton.addActionListener(e -> {
 		
 			FormatRequest formatRequest = new FormatRequest();
@@ -63,8 +81,14 @@ public class FormatPanel extends JPanel {
 			}
 			
 			formatRequest.setVideoInputPath(videoFilePath.getAbsolutePath());
+			videoFormatType = (String) videoFormatChooser.getSelectedItem();
 			formatRequest.setVideoFormatType(videoFormatType);
-			
+			if(resizeOutputVideoChooser.isVisible()){
+				resizeOutputVideo = (String) resizeOutputVideoChooser.getSelectedItem();
+			} else {
+				resizeOutputVideo = null;
+			}
+			formatRequest.setResizeOutputVideo(resizeOutputVideo);
 			progressPanel.showProgress("Formatting video...");
 			cardLayout.show(container, "PROGRESSPANEL");
 			
@@ -96,6 +120,8 @@ public class FormatPanel extends JPanel {
 		setLayout(new FlowLayout());
 		add(videoFileChooser);
 		add(videoFormatChooser);
+		add(resizeOutputVideoCheckbox);
+		add(resizeOutputVideoChooser);
 		add(formatButton);
 		add(mainMenuButton);
 		

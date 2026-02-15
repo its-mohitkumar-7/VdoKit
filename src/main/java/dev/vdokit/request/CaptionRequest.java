@@ -10,6 +10,7 @@ public class CaptionRequest{
 	private String videoFilePath;
 	private String captionFilePath;
 	private boolean hardEmbeddingEnabled;
+	private String resizeOutputVideo;
 	private String outputVideoFormat;
 	
 	
@@ -17,14 +18,25 @@ public class CaptionRequest{
 	
 		List<String> cmd = new ArrayList<String>();
 		
+		String outputVideoPath = videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + outputVideoFormat;
+		
 		if(hardEmbeddingEnabled){
 			cmd.add(PlatformDetector.getBinary());
 			cmd.add("-y");
 			cmd.add("-i");
 			cmd.add(videoFilePath);
+			String filter = "subtitles='" + captionFilePath + "'";
+			if(resizeOutputVideo != null){
+				filter += ",scale=" + resizeOutputVideo;
+			}
 			cmd.add("-vf");
-			cmd.add("subtitles='" + captionFilePath + "'");
-			cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + outputVideoFormat);
+			cmd.add(filter);
+			cmd.add("-c:v");
+			cmd.add("libx264");
+			cmd.add("-c:a");
+			cmd.add("copy");
+			cmd.add(outputVideoPath);
+			return cmd;
 
 		}
 		
@@ -35,9 +47,18 @@ public class CaptionRequest{
 			cmd.add(videoFilePath);
 			cmd.add("-i");
 			cmd.add(captionFilePath);
+			if(resizeOutputVideo != null){
+				cmd.add("-vf");
+				cmd.add("scale=" + resizeOutputVideo);
+				cmd.add("-c:v");
+				cmd.add("libx264");
+				cmd.add("-c:a");
+				cmd.add("copy");
+			} else {
 			cmd.add("-c");
 			cmd.add("copy");
-			cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + outputVideoFormat);
+			}
+			cmd.add(outputVideoPath);
 
 		}
 		
@@ -48,13 +69,17 @@ public class CaptionRequest{
 			cmd.add(videoFilePath);
 			cmd.add("-i");
 			cmd.add(captionFilePath);
+			if(resizeOutputVideo != null){
+				cmd.add("-vf");
+				cmd.add("scale=" + resizeOutputVideo);
+			}
 			cmd.add("-c:v");
 			cmd.add("libvpx-vp9");
 			cmd.add("-c:a");
 			cmd.add("libopus");
 			cmd.add("-c:s");
 			cmd.add("webvtt");
-			cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + outputVideoFormat);
+			cmd.add(outputVideoPath);
 
 		}
 		
@@ -65,11 +90,22 @@ public class CaptionRequest{
 			cmd.add(videoFilePath);
 			cmd.add("-i");
 			cmd.add(captionFilePath);
-			cmd.add("-c");
-			cmd.add("copy");
-			cmd.add("-c:s");
-			cmd.add("mov_text");
-			cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + outputVideoFormat);
+			if(resizeOutputVideo != null){
+				cmd.add("-vf");
+				cmd.add("scale=" + resizeOutputVideo);
+				cmd.add("-c:v");
+				cmd.add("libx264");
+				cmd.add("-c:a");
+				cmd.add("copy");
+				cmd.add("-c:s");
+				cmd.add("mov_text");
+			} else {
+				cmd.add("-c");
+				cmd.add("copy");
+				cmd.add("-c:s");
+				cmd.add("mov_text");
+			}
+			cmd.add(outputVideoPath);
 
 	}
 	
@@ -97,6 +133,10 @@ public class CaptionRequest{
 	
 	public void setHardEmbeddingEnabled(boolean hardEmbeddingEnabled){
 		this.hardEmbeddingEnabled = hardEmbeddingEnabled;
+	}
+	
+	public void setResizeOutputVideo(String resizeOutputVideo){
+		this.resizeOutputVideo = resizeOutputVideo;
 	}
 
 }

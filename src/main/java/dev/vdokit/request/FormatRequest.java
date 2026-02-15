@@ -9,6 +9,7 @@ public class FormatRequest{
 	
 	private String videoFilePath;
 	private String videoFormatType;
+	private String resizeOutputVideo;
 	
 	public List<String> buildCommand(){
 		
@@ -18,6 +19,10 @@ public class FormatRequest{
 		cmd.add("-y");
 		cmd.add("-i");
 		cmd.add(videoFilePath);
+		if(resizeOutputVideo != null){
+			cmd.add("-vf");
+			cmd.add("scale=" + resizeOutputVideo);
+		}
 		cmd.add(videoFilePath.substring(0, videoFilePath.lastIndexOf('/') + 1) + "VdoKit_" + videoFilePath.substring(videoFilePath.lastIndexOf('/') + 1, videoFilePath.lastIndexOf('.')) + "." + videoFormatType);
 
 		
@@ -35,6 +40,10 @@ public class FormatRequest{
 	
 	public void setVideoFormatType(String videoFormatType){
 		this.videoFormatType = videoFormatType;
+	}
+	
+	public void setResizeOutputVideo(String resizeOutputVideo){
+		this.resizeOutputVideo = resizeOutputVideo;
 	}
 
 }
