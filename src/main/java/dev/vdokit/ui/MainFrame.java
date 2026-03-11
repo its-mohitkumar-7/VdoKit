@@ -6,38 +6,49 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 	ImageIcon icon = new ImageIcon("src/resources/icons/logo.png");
 	
+	
+	
 	private CardLayout cardLayout;
 	private JPanel container;
 	
-	private MainPanel mainPanel;
+	private MainMenuPanel mainMenuPanel;
 	private FormatPanel formatPanel;
 	private CaptionPanel captionPanel;
 	private ProgressPanel progressPanel;
 	
 	public MainFrame(){
 	
+	
 		//cardlayout
 		cardLayout = new CardLayout();
 		container = new JPanel(cardLayout);
+		container.setOpaque(false);
 	
 		//panels
-		mainPanel = new MainPanel();
+		mainMenuPanel = new MainMenuPanel();
 		progressPanel = new ProgressPanel();
 		formatPanel = new FormatPanel(cardLayout, container, progressPanel);
 		captionPanel = new CaptionPanel(cardLayout, container, progressPanel);
 		
-		container.add(mainPanel,"MAINPANEL");
+		
+		//panel properties
+		mainMenuPanel.setOpaque(false);
+		progressPanel.setOpaque(false);
+		formatPanel.setOpaque(false);
+		captionPanel.setOpaque(false);
+		
+		container.add(mainMenuPanel,"MAINMENUPANEL");
 		container.add(formatPanel,"FORMATPANEL");
 		container.add(captionPanel,"CAPTIONPANEL");
 		container.add(progressPanel, "PROGRESSPANEL");
 		
 		
 		//button press logic
-		mainPanel.formatButton.addActionListener(e -> {
+		mainMenuPanel.formatButton.addActionListener(e -> {
             cardLayout.show(container, "FORMATPANEL");
         });
         
-        mainPanel.captionButton.addActionListener(e -> {
+        mainMenuPanel.captionButton.addActionListener(e -> {
         	cardLayout.show(container,"CAPTIONPANEL");
         });
         
@@ -52,15 +63,32 @@ public class MainFrame extends JFrame {
         });
         
         // exit button setup
-        mainPanel.exitButton.addActionListener(e -> {
+        mainMenuPanel.exitButton.addActionListener(e -> {
         	System.exit(0);
         });
+        
+        JPanel watermarkPanel = new JPanel(new BorderLayout()) {
+
+            private Image watermark = icon.getImage();
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.25f));
+                g2.drawImage(watermark, 0, 0, getWidth(), getHeight(), this);
+                g2.dispose();
+            }
+            
+        };
+
+        watermarkPanel.add(container, BorderLayout.CENTER);
         
         //frame properties
 		setTitle("VdoKit");
 		setSize(800,600);
-		setLayout(new FlowLayout());
-		add(container);
+		setLayout(new BorderLayout());
+		add(watermarkPanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(icon.getImage());
 		setVisible(true);
