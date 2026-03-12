@@ -55,7 +55,7 @@ public class MainMenuPanel extends JPanel {
 		formatButton.setIcon(formatButtonIcon);
 		formatButton.setHorizontalTextPosition(JButton.CENTER);
 		formatButton.setVerticalTextPosition(JButton.BOTTOM);
-		formatButton.setFont(new Font("Monospaced",Font.BOLD,75));
+		formatButton.setFont(new Font("Roboto",Font.BOLD,70));
 		formatButton.setForeground(new Color(230, 230, 235));
 		formatButton.setBackground(new Color(143, 164, 191));
 		formatButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -68,7 +68,7 @@ public class MainMenuPanel extends JPanel {
 		captionButton.setIcon(captionButtonIcon);
 		captionButton.setHorizontalTextPosition(JButton.CENTER);
 		captionButton.setVerticalTextPosition(JButton.BOTTOM);
-		captionButton.setFont(new Font("Monospaced",Font.BOLD,75));
+		captionButton.setFont(new Font("Inter",Font.BOLD,70));
 		captionButton.setForeground(new Color(230, 230, 235));
 		captionButton.setBackground(new Color(143, 164, 191));
 		captionButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -81,7 +81,7 @@ public class MainMenuPanel extends JPanel {
 		exitButton.setIcon(exitButtonIcon);
 		exitButton.setHorizontalTextPosition(JButton.CENTER);
 		exitButton.setVerticalTextPosition(JButton.BOTTOM);
-		exitButton.setFont(new Font("Monospaced",Font.BOLD,75));
+		exitButton.setFont(new Font("Roboto",Font.BOLD,70));
 		exitButton.setForeground(new Color(230, 230, 235));
 		exitButton.setBackground(new Color(143, 164, 191));
 		exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
