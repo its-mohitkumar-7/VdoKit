@@ -15,6 +15,8 @@ public class FormatPanel extends JPanel {
 	private JButton formatButton;
 	public JButton mainMenuButton;
 	
+	private JLabel videoFormatLabel;
+	
 	private JComboBox<String> videoFormatChooser;
 	private JComboBox<String> resizeOutputVideoChooser;
 	
@@ -47,9 +49,9 @@ public class FormatPanel extends JPanel {
 		JPanel headerPanel = new JPanel();
 		
 		JLabel panelTittle = new JLabel("Format");
-		panelTittle.setFont(new Font("Roboto", Font.BOLD, 100));
+		panelTittle.setFont(new Font("Roboto", Font.BOLD, 120));
 		panelTittle.setForeground(new Color(35, 53, 79));
-		panelTittle.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		panelTittle.setBorder(BorderFactory.createEmptyBorder(10, 10, 50, 10));
 		
 		headerPanel.add(panelTittle);
 		add(headerPanel, BorderLayout.NORTH);
@@ -59,20 +61,88 @@ public class FormatPanel extends JPanel {
 		
 		 
 		JPanel centerPanel = new JPanel();
+		add(centerPanel, BorderLayout.CENTER);
+		
+		centerPanel.setLayout(new GridBagLayout());
+		
+		GridBagConstraints GBC = new GridBagConstraints();
+		
+		GBC.gridx = 0;
+		GBC.gridy = 0;
+		GBC.gridwidth = 3;
+		GBC.gridheight = 3;
+		GBC.fill = GridBagConstraints.BOTH;
+		
 		videoFileChooser = new JButton("Choose video");
-		formatButton = new JButton("Convert");
-		mainMenuButton = new JButton("Main Menu");
+		videoFileChooser.setForeground(new Color(230, 230, 235));
+		videoFileChooser.setBackground(new Color(143, 164, 191));
+		videoFileChooser.setFont(new Font("Roboto", Font.PLAIN, 18));
+		videoFileChooser.setPreferredSize(new Dimension(160,40));
+		centerPanel.add(videoFileChooser, GBC);
+		
+		GBC.gridy = 4;
+		GBC.gridwidth = 1;
+		GBC.gridheight = 1;
+		GBC.fill = GridBagConstraints.NONE;
+		
+		videoFormatLabel = new JLabel("Select Video Format: ");
+		videoFormatLabel.setLabelFor(videoFormatChooser);
+		centerPanel.add(videoFormatLabel, GBC);
+		
+		GBC.gridx = 1;
 		
 		videoFormatChooser = new JComboBox<>(allFormats);
 		videoFormatChooser.setSelectedIndex(0);
+		videoFormatChooser.setForeground(new Color(230, 230, 235));
+		videoFormatChooser.setBackground(new Color(143, 164, 191));
+		videoFormatChooser.setFont(new Font("Roboto", Font.PLAIN, 16));
+		videoFormatChooser.setPreferredSize(new Dimension(150, 36));
+		centerPanel.add(videoFormatChooser, GBC);
+		
+		GBC.gridx = 0;
+		GBC.gridy = 7;
+		
+		resizeOutputVideoCheckbox = new JCheckBox("Scale: ");
+		resizeOutputVideoCheckbox.setHorizontalTextPosition(JCheckBox.LEADING);
+		resizeOutputVideoCheckbox.setForeground(Color.BLACK);
+		//resizeOutputVideoCheckbox.setBackground(new Color(143, 164, 191));
+		resizeOutputVideoCheckbox.setFont(new Font("Roboto", Font.PLAIN, 16));
+		centerPanel.add(resizeOutputVideoCheckbox, GBC);
+		
+		GBC.gridx = 1;
 		
 		resizeOutputVideoChooser = new JComboBox<>(allResolutions);
 		resizeOutputVideoChooser.setSelectedIndex(0);
 		resizeOutputVideoChooser.setVisible(false);
+		resizeOutputVideoChooser.setForeground(new Color(230, 230, 235));
+		resizeOutputVideoChooser.setBackground(new Color(143, 164, 191));
+		resizeOutputVideoChooser.setFont(new Font("Roboto", Font.PLAIN, 16));
+		resizeOutputVideoChooser.setPreferredSize(new Dimension(150, 36));
+		centerPanel.add(resizeOutputVideoChooser, GBC);
 		
-		resizeOutputVideoCheckbox = new JCheckBox("Scale");
+		GBC.gridx = 0;
+		GBC.gridy = 8;
+		
+		formatButton = new JButton("Convert");
+		formatButton.setForeground(new Color(230, 230, 235));
+		formatButton.setBackground(new Color(143, 164, 191));
+		formatButton.setFont(new Font("Roboto", Font.PLAIN, 18));
+		formatButton.setPreferredSize(new Dimension(180,45));
+		centerPanel.add(formatButton, GBC);
+		
+		GBC.gridy = 9;
+		GBC.weighty = 1;
+		
+		mainMenuButton = new JButton("Main Menu");
+		mainMenuButton.setForeground(new Color(230, 230, 235));
+		mainMenuButton.setBackground(new Color(143, 164, 191));
+		mainMenuButton.setFont(new Font("Roboto", Font.PLAIN, 18));
+		mainMenuButton.setPreferredSize(new Dimension(150, 36));
+		centerPanel.add(mainMenuButton, GBC);		
+								
 		
 		// button listener setup
+		
 		
 		videoFileChooser.addActionListener(e -> {
 		
@@ -139,15 +209,8 @@ public class FormatPanel extends JPanel {
 		swingWorker.execute();		
 	});
 		
-		// panel attributes
-		centerPanel.setLayout(new FlowLayout());
-		centerPanel.add(videoFileChooser);
-		centerPanel.add(videoFormatChooser);
-		centerPanel.add(resizeOutputVideoCheckbox);
-		centerPanel.add(resizeOutputVideoChooser);
-		centerPanel.add(formatButton);
-		centerPanel.add(mainMenuButton);
-		add(centerPanel, BorderLayout.CENTER);
+		
+		
 		
 		
 		//-----------------------Footer Panel-----------------------//
