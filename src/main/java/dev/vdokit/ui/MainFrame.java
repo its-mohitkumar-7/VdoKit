@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+
 	ImageIcon icon = new ImageIcon("src/resources/icons/logo.png");
-	
 	
 	
 	private CardLayout cardLayout;
@@ -55,11 +55,11 @@ public class MainFrame extends JFrame {
         // main menu button
         
         formatPanel.mainMenuButton.addActionListener(e -> {
-        	cardLayout.show(container,"MAINPANEL");
+        	cardLayout.show(container,"MAINMENUPANEL");
         });
         
         captionPanel.mainMenuButton.addActionListener(e -> {
-        	cardLayout.show(container,"MAINPANEL");
+        	cardLayout.show(container,"MAINMENUPANEL");
         });
         
         // exit button setup
