@@ -47,101 +47,129 @@ public class FormatPanel extends JPanel {
 		
 		
 		JPanel headerPanel = new JPanel();
-		
-		JLabel panelTittle = new JLabel("Format");
-		panelTittle.setFont(new Font("Roboto", Font.BOLD, 120));
-		panelTittle.setForeground(new Color(35, 53, 79));
-		panelTittle.setBorder(BorderFactory.createEmptyBorder(10, 10, 50, 10));
-		
-		headerPanel.add(panelTittle);
+		headerPanel.setLayout(new GridBagLayout());
+		headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+		headerPanel.setBackground(new Color(181, 181, 181));
 		add(headerPanel, BorderLayout.NORTH);
 		
+		GridBagConstraints GBCH = new GridBagConstraints();
+		
+		GBCH.anchor = GridBagConstraints.NORTHWEST;
+		GBCH.gridx = 0;
+		GBCH.weightx = 1.0;
+		
+		mainMenuButton = new JButton("☰ Main Menu");
+		mainMenuButton.setFocusPainted(false);
+		mainMenuButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		mainMenuButton.setForeground(new Color(230, 230, 235));
+		mainMenuButton.setBackground(new Color(115, 114, 114));
+		mainMenuButton.setFont(new Font("Roboto", Font.BOLD, 15));
+		mainMenuButton.setPreferredSize(new Dimension(140, 42));
+		headerPanel.add(mainMenuButton, GBCH);
+		
+		GBCH.gridx = 1;
+		GBCH.weightx = 1.0;
+		GBCH.weighty = 0;
+		GBCH.anchor = GridBagConstraints.NORTHWEST;
+		
+		JLabel panelTittle = new JLabel("Format");
+		panelTittle.setFont(new Font("Roboto", Font.BOLD, 80));
+		panelTittle.setForeground(new Color(35, 53, 79, 220));
+		headerPanel.add(panelTittle, GBCH);
+			
 		
 		//------------------------Center Panel--------------------//
 		
 		 
 		JPanel centerPanel = new JPanel();
+		centerPanel.setBorder(BorderFactory.createEmptyBorder(40, 350, 40, 350));
+		centerPanel.setBackground(new Color(230, 230, 230));
 		add(centerPanel, BorderLayout.CENTER);
 		
 		centerPanel.setLayout(new GridBagLayout());
 		
-		GridBagConstraints GBC = new GridBagConstraints();
+		GridBagConstraints GBCC = new GridBagConstraints();
 		
-		GBC.gridx = 0;
-		GBC.gridy = 0;
-		GBC.gridwidth = 3;
-		GBC.gridheight = 3;
-		GBC.fill = GridBagConstraints.BOTH;
+		GBCC.anchor = GridBagConstraints.WEST;
 		
+		GBCC.gridx = 0;
+		GBCC.gridy = 0;
+		GBCC.insets = new Insets(16, 10, 16, 10);
+			
 		videoFileChooser = new JButton("Choose video");
 		videoFileChooser.setForeground(new Color(230, 230, 235));
 		videoFileChooser.setBackground(new Color(143, 164, 191));
-		videoFileChooser.setFont(new Font("Roboto", Font.PLAIN, 18));
-		videoFileChooser.setPreferredSize(new Dimension(160,40));
-		centerPanel.add(videoFileChooser, GBC);
+		videoFileChooser.setFont(new Font("Roboto", Font.BOLD, 20));
+		videoFileChooser.setFocusable(false);
+		videoFileChooser.setPreferredSize(new Dimension(200, 42));
+		centerPanel.add(videoFileChooser, GBCC);
 		
-		GBC.gridy = 4;
-		GBC.gridwidth = 1;
-		GBC.gridheight = 1;
-		GBC.fill = GridBagConstraints.NONE;
+		GBCC.gridx = 1;
+		GBCC.gridy = 0;
+		GBCC.weightx = 1.0;
+		GBCC.fill = GridBagConstraints.HORIZONTAL;
+		
+		JTextField videoLocationLabel = new JTextField(28);
+		videoLocationLabel.setEditable(false);
+		videoLocationLabel.setFont(new Font("Monospaced", Font.PLAIN, 18));
+		videoLocationLabel.setPreferredSize(new Dimension(0, 40));
+		centerPanel.add(videoLocationLabel,GBCC);	
+		
+		GBCC.gridx = 0;
+		GBCC.gridy = 1;
+		GBCC.weightx = 0;
+		GBCC.fill = GridBagConstraints.NONE;
 		
 		videoFormatLabel = new JLabel("Select Video Format: ");
 		videoFormatLabel.setLabelFor(videoFormatChooser);
-		centerPanel.add(videoFormatLabel, GBC);
+		videoFormatLabel.setFont(new Font("Roboto", Font.BOLD, 20));
+		centerPanel.add(videoFormatLabel, GBCC);
 		
-		GBC.gridx = 1;
+		GBCC.gridx = 1;
 		
 		videoFormatChooser = new JComboBox<>(allFormats);
 		videoFormatChooser.setSelectedIndex(0);
 		videoFormatChooser.setForeground(new Color(230, 230, 235));
 		videoFormatChooser.setBackground(new Color(143, 164, 191));
-		videoFormatChooser.setFont(new Font("Roboto", Font.PLAIN, 16));
+		videoFormatChooser.setFont(new Font("Roboto", Font.BOLD, 20));
 		videoFormatChooser.setPreferredSize(new Dimension(150, 36));
-		centerPanel.add(videoFormatChooser, GBC);
+		centerPanel.add(videoFormatChooser, GBCC);
 		
-		GBC.gridx = 0;
-		GBC.gridy = 7;
+		GBCC.gridx = 0;
+		GBCC.gridy = 2;
+		GBCC.insets = new Insets(10, 10, 10, 10);
 		
 		resizeOutputVideoCheckbox = new JCheckBox("Scale: ");
 		resizeOutputVideoCheckbox.setHorizontalTextPosition(JCheckBox.LEADING);
 		resizeOutputVideoCheckbox.setForeground(Color.BLACK);
-		//resizeOutputVideoCheckbox.setBackground(new Color(143, 164, 191));
-		resizeOutputVideoCheckbox.setFont(new Font("Roboto", Font.PLAIN, 16));
-		centerPanel.add(resizeOutputVideoCheckbox, GBC);
+		resizeOutputVideoCheckbox.setBackground(new Color(230, 230, 230));
+		resizeOutputVideoCheckbox.setFocusable(false);
+		resizeOutputVideoCheckbox.setFont(new Font("Roboto", Font.BOLD, 20));
+		centerPanel.add(resizeOutputVideoCheckbox, GBCC);
 		
-		GBC.gridx = 1;
+		GBCC.gridx = 1;
 		
 		resizeOutputVideoChooser = new JComboBox<>(allResolutions);
 		resizeOutputVideoChooser.setSelectedIndex(0);
 		resizeOutputVideoChooser.setVisible(false);
 		resizeOutputVideoChooser.setForeground(new Color(230, 230, 235));
 		resizeOutputVideoChooser.setBackground(new Color(143, 164, 191));
-		resizeOutputVideoChooser.setFont(new Font("Roboto", Font.PLAIN, 16));
+		resizeOutputVideoChooser.setFont(new Font("Roboto", Font.BOLD, 20));
 		resizeOutputVideoChooser.setPreferredSize(new Dimension(150, 36));
-		centerPanel.add(resizeOutputVideoChooser, GBC);
+		centerPanel.add(resizeOutputVideoChooser, GBCC);
 		
-		GBC.gridx = 0;
-		GBC.gridy = 8;
+		GBCC.gridx = 1;
+		GBCC.gridy = 3;
+		GBCC.anchor = GridBagConstraints.CENTER;
+		GBCC.insets = new Insets(30, 10, 10, 10);
 		
 		formatButton = new JButton("Convert");
 		formatButton.setForeground(new Color(230, 230, 235));
-		formatButton.setBackground(new Color(143, 164, 191));
-		formatButton.setFont(new Font("Roboto", Font.PLAIN, 18));
-		formatButton.setPreferredSize(new Dimension(180,45));
-		centerPanel.add(formatButton, GBC);
-		
-		GBC.gridy = 9;
-		GBC.weighty = 1;
-		
-		mainMenuButton = new JButton("Main Menu");
-		mainMenuButton.setForeground(new Color(230, 230, 235));
-		mainMenuButton.setBackground(new Color(143, 164, 191));
-		mainMenuButton.setFont(new Font("Roboto", Font.PLAIN, 18));
-		mainMenuButton.setPreferredSize(new Dimension(150, 36));
-		centerPanel.add(mainMenuButton, GBC);		
-								
-		
-		// button listener setup
+		formatButton.setBackground(new Color(109, 124, 143));
+		formatButton.setFont(new Font("Roboto", Font.BOLD, 40));
+		formatButton.setFocusable(false);
+		formatButton.setPreferredSize(new Dimension(300, 70));
+		centerPanel.add(formatButton, GBCC);
 		
 		
 		videoFileChooser.addActionListener(e -> {
@@ -150,6 +178,8 @@ public class FormatPanel extends JPanel {
 			int response = jFileChooser.showOpenDialog(this);
 			if(response == JFileChooser.APPROVE_OPTION){
 				videoFilePath = jFileChooser.getSelectedFile();
+				videoLocationLabel.setText(videoFilePath.getAbsolutePath());
+				
 			}
 			
 		});
@@ -159,8 +189,10 @@ public class FormatPanel extends JPanel {
 		
 			if(e.getStateChange() == ItemEvent.SELECTED){
 				resizeOutputVideoChooser.setVisible(true);
-			} else resizeOutputVideoChooser.setVisible(false);
-		
+			} else {
+				resizeOutputVideoChooser.setVisible(false);
+				}
+				
 		});
 		
 		
@@ -180,7 +212,7 @@ public class FormatPanel extends JPanel {
 				resizeOutputVideo = (String) resizeOutputVideoChooser.getSelectedItem();
 			} else {
 				resizeOutputVideo = null;
-			}
+				}
 			formatRequest.setResizeOutputVideo(resizeOutputVideo);
 			progressPanel.showProgress("Formatting video...");
 			cardLayout.show(container, "PROGRESSPANEL");
@@ -199,14 +231,23 @@ public class FormatPanel extends JPanel {
 				cardLayout.show(container, "FORMATPANEL");
 				try{
 					get();
+					videoFilePath = null;
+    				videoLocationLabel.setText("");
+    				videoFormatChooser.setSelectedIndex(0);
+    				resizeOutputVideoCheckbox.setSelected(false);
+    				resizeOutputVideoChooser.setSelectedIndex(0);
+    				resizeOutputVideoChooser.setVisible(false);
+    				
 					JOptionPane.showMessageDialog(FormatPanel.this, "Formtting completed!");
 				} catch (Exception exception){
 					exception.printStackTrace();
 					JOptionPane.showMessageDialog(FormatPanel.this, "Error: " + exception.getMessage());
 				}
 			}
-		};	
-		swingWorker.execute();		
+		};
+			
+		swingWorker.execute();
+				
 	});
 		
 		
@@ -217,6 +258,11 @@ public class FormatPanel extends JPanel {
 		
 		
 		JPanel footerPanel = new JPanel();
+		footerPanel.setBackground(new Color(181, 181, 181));
+		
+		JLabel footerLabel = new JLabel("Powered By FFMPEG");
+		footerLabel.setFont(new Font("Roboto", Font.BOLD, 12));
+		footerPanel.add(footerLabel);
 		
 		add(footerPanel, BorderLayout.SOUTH);
 		

@@ -28,6 +28,7 @@ public class MainMenuPanel extends JPanel {
 		
 		JPanel headerPanel = new JPanel();
 		headerPanel.setLayout(new BorderLayout());
+		headerPanel.setBackground(new Color(225, 225, 225));
 		headerPanel.setOpaque(false);
 		
 		
@@ -45,6 +46,7 @@ public class MainMenuPanel extends JPanel {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setOpaque(false);
+		centerPanel.setBackground(new Color(225, 225, 225));
 		GridBagConstraints GBC = new GridBagConstraints();
 		GBC.insets = new Insets(10,10,10,10);
 		
@@ -100,6 +102,7 @@ public class MainMenuPanel extends JPanel {
 		JPanel footerPanel = new JPanel();
 		footerPanel.setLayout(new BoxLayout(footerPanel, BoxLayout.Y_AXIS));
 		footerPanel.setOpaque(false);
+		footerPanel.setBackground(new Color(225, 225, 225));
 		footerPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		
 		

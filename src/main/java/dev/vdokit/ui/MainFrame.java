@@ -86,11 +86,12 @@ public class MainFrame extends JFrame {
         
         //frame properties
 		setTitle("VdoKit");
-		setSize(800,600);
 		setLayout(new BorderLayout());
 		add(watermarkPanel, BorderLayout.CENTER);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(icon.getImage());
+		pack();
 		setVisible(true);
 	}
 }
