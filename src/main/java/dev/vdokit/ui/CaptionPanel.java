@@ -24,7 +24,7 @@ public class CaptionPanel extends JPanel{
 	private JCheckBox resizeOutputVideoCheckbox;
 	
 	private JComboBox<String> outputVideoFormatChooser;
-	private JComboBox<String> resizeOutputVideoChooser;
+	private JComboBox<String> outputVideoResolutionChooser;
 	
 	private JLabel embedTypeLabel;
 	private JLabel videoFormatLabel;
@@ -40,8 +40,8 @@ public class CaptionPanel extends JPanel{
 	private FileNameExtensionFilter typeCaption;
 	
 	private String[] allCaptionFormats = {"srt","vtt","ass","ssa","sub","idx","sbv","ttml","dfxp","xml","smi","rt"};
-	private String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","ts","mts","m2ts","mpeg","vob","ogv"};
-	private String[] allResolutions = {"256:144","426:240","640:360","854:480","960:540","1024:576","1280:720","1366:768","1600:900","1920:1080","2048:1080","2560:1440","3200:1800","3840:2160","4096:2160","5120:2880","7680:4320"};
+	private String[] allVideoFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","ts","mts","m2ts","mpeg","vob","ogv"};
+	private String[] allVideoResolutions = {"256:144","426:240","640:360","854:480","960:540","1024:576","1280:720","1366:768","1600:900","1920:1080","2048:1080","2560:1440","3200:1800","3840:2160","4096:2160","5120:2880","7680:4320"};
 	
 	// choice variables
 	private File videoFilePath;
@@ -197,26 +197,26 @@ public class CaptionPanel extends JPanel{
 		
 		GBCC.gridx = 1;
 		
-		resizeOutputVideoChooser = new JComboBox<>(allResolutions);
-		resizeOutputVideoChooser.setSelectedIndex(0);
-		resizeOutputVideoChooser.setVisible(false);
-		resizeOutputVideoChooser.setForeground(new Color(230, 230, 235));
-		resizeOutputVideoChooser.setBackground(new Color(143, 164, 191));
-		resizeOutputVideoChooser.setFont(new Font("Roboto", Font.BOLD, 20));
-		resizeOutputVideoChooser.setPreferredSize(new Dimension(150, 36));
-		centerPanel.add(resizeOutputVideoChooser, GBCC);
+		outputVideoResolutionChooser = new JComboBox<>(allVideoResolutions);
+		outputVideoResolutionChooser.setSelectedIndex(0);
+		outputVideoResolutionChooser.setVisible(false);
+		outputVideoResolutionChooser.setForeground(new Color(230, 230, 235));
+		outputVideoResolutionChooser.setBackground(new Color(143, 164, 191));
+		outputVideoResolutionChooser.setFont(new Font("Roboto", Font.BOLD, 20));
+		outputVideoResolutionChooser.setPreferredSize(new Dimension(150, 36));
+		centerPanel.add(outputVideoResolutionChooser, GBCC);
 		
 		GBCC.gridx = 0;
 		GBCC.gridy = 4;
 		
 		videoFormatLabel = new JLabel("Output Format: ");
-		videoFormatLabel.setLabelFor(resizeOutputVideoChooser);
+		videoFormatLabel.setLabelFor(outputVideoResolutionChooser);
 		videoFormatLabel.setFont(new Font("Roboto", Font.BOLD, 20));
 		centerPanel.add(videoFormatLabel, GBCC);
 		
 		GBCC.gridx = 1;
 		
-		outputVideoFormatChooser = new JComboBox<>(allFormats);
+		outputVideoFormatChooser = new JComboBox<>(allVideoFormats);
 		outputVideoFormatChooser.setSelectedIndex(0);
 		outputVideoFormatChooser.setForeground(new Color(230, 230, 235));
 		outputVideoFormatChooser.setBackground(new Color(143, 164, 191));
@@ -237,7 +237,7 @@ public class CaptionPanel extends JPanel{
 		embedButton.setPreferredSize(new Dimension(300, 70));
 		centerPanel.add(embedButton, GBCC);
 		
-		typeVideo = new FileNameExtensionFilter("video type file filter", allFormats);
+		typeVideo = new FileNameExtensionFilter("video type file filter", allVideoFormats);
 		typeCaption = new FileNameExtensionFilter("caption type file filter", allCaptionFormats);
 		
 		// button listener setup
@@ -277,7 +277,7 @@ public class CaptionPanel extends JPanel{
 		hardEmbedding.addActionListener(e -> {
 		
 			outputVideoFormatChooser.removeAllItems();
-			for(String format : allFormats){
+			for(String format : allVideoFormats){
 				outputVideoFormatChooser.addItem(format);
 			}
 			hardEmbeddingEnabled = true;
@@ -286,7 +286,7 @@ public class CaptionPanel extends JPanel{
 		
 		resizeOutputVideoCheckbox.addItemListener(e -> {
 			
-			resizeOutputVideoChooser.setVisible(resizeOutputVideoCheckbox.isSelected());
+			outputVideoResolutionChooser.setVisible(resizeOutputVideoCheckbox.isSelected());
     		revalidate();
     		repaint();
 			
@@ -312,7 +312,7 @@ public class CaptionPanel extends JPanel{
 			captionRequest.setOutputVideoFormat(outputVideoFormat);
 			
 			if (resizeOutputVideoCheckbox.isSelected()){
-    			resizeOutputVideo = (String) resizeOutputVideoChooser.getSelectedItem();
+    			resizeOutputVideo = (String) outputVideoResolutionChooser.getSelectedItem();
 			} else {
     			resizeOutputVideo = null;
 			}
@@ -341,8 +341,8 @@ public class CaptionPanel extends JPanel{
                         videoLocationLabel.setText("");
                         captionLocationLabel.setText("");
                         resizeOutputVideoCheckbox.setSelected(false);
-                        resizeOutputVideoChooser.setSelectedIndex(0);
-    					resizeOutputVideoChooser.setVisible(false);
+                        outputVideoResolutionChooser.setSelectedIndex(0);
+    					outputVideoResolutionChooser.setVisible(false);
                         
                         JOptionPane.showMessageDialog(CaptionPanel.this, "Embedding completed!");
                     } catch (Exception exception) {
