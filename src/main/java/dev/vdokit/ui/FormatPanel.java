@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import dev.vdokit.request.FormatRequest;
 import dev.vdokit.core.ProcessRunner;
@@ -21,6 +22,8 @@ public class FormatPanel extends JPanel {
 	private JComboBox<String> resizeOutputVideoChooser;
 	
 	private JCheckBox resizeOutputVideoCheckbox;
+	
+	private FileNameExtensionFilter typeVideo;
 	
 	private String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","3g2","ts","m2ts","mts","mpeg","mpg","vob","ogv","f4v","rm","rmvb","divx","mxf","gxf","dv","nut","mjpeg","mjpg","y4m","gif"};
 	private String[] allResolutions = {"256:144","426:240","640:360","854:480","960:540","1024:576","1280:720","1366:768","1600:900","1920:1080","2048:1080","2560:1440","3200:1800","3840:2160","4096:2160","5120:2880","7680:4320"};
@@ -171,10 +174,12 @@ public class FormatPanel extends JPanel {
 		formatButton.setPreferredSize(new Dimension(300, 70));
 		centerPanel.add(formatButton, GBCC);
 		
+		typeVideo = new FileNameExtensionFilter("video type file filter", allFormats);
 		
 		videoFileChooser.addActionListener(e -> {
 		
 			JFileChooser jFileChooser = new JFileChooser();
+			jFileChooser.setFileFilter(typeVideo);
 			int response = jFileChooser.showOpenDialog(this);
 			if(response == JFileChooser.APPROVE_OPTION){
 				videoFilePath = jFileChooser.getSelectedFile();
