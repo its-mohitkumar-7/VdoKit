@@ -25,13 +25,13 @@ public class FormatPanel extends JPanel {
 	
 	private FileNameExtensionFilter typeVideo;
 	
-	private String[] allFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","3g2","ts","m2ts","mts","mpeg","mpg","vob","ogv","f4v","rm","rmvb","divx","mxf","gxf","dv","nut","mjpeg","mjpg","y4m","gif"};
-	private String[] allResolutions = {"256:144","426:240","640:360","854:480","960:540","1024:576","1280:720","1366:768","1600:900","1920:1080","2048:1080","2560:1440","3200:1800","3840:2160","4096:2160","5120:2880","7680:4320"};
+	private String[] allVideoFormats = {"mkv","mp4","m4v","mov","webm","avi","flv","wmv","asf","3gp","3g2","ts","m2ts","mts","mpeg","mpg","vob","ogv","f4v","rm","rmvb","divx","mxf","gxf","dv","nut","mjpeg","mjpg","y4m","gif"};
+	private String[] allVideoResolutions = {"256:144","426:240","640:360","854:480","960:540","1024:576","1280:720","1366:768","1600:900","1920:1080","2048:1080","2560:1440","3200:1800","3840:2160","4096:2160","5120:2880","7680:4320"};
 
 	private CardLayout cardLayout;
 	private JPanel container;
 	private ProgressPanel progressPanel;
-
+	
 	//choice variables
 	File videoFilePath;
 	String videoFormatType;
@@ -130,7 +130,7 @@ public class FormatPanel extends JPanel {
 		
 		GBCC.gridx = 1;
 		
-		videoFormatChooser = new JComboBox<>(allFormats);
+		videoFormatChooser = new JComboBox<>(allVideoFormats);
 		videoFormatChooser.setSelectedIndex(0);
 		videoFormatChooser.setForeground(new Color(230, 230, 235));
 		videoFormatChooser.setBackground(new Color(143, 164, 191));
@@ -152,7 +152,7 @@ public class FormatPanel extends JPanel {
 		
 		GBCC.gridx = 1;
 		
-		resizeOutputVideoChooser = new JComboBox<>(allResolutions);
+		resizeOutputVideoChooser = new JComboBox<>(allVideoResolutions);
 		resizeOutputVideoChooser.setSelectedIndex(0);
 		resizeOutputVideoChooser.setVisible(false);
 		resizeOutputVideoChooser.setForeground(new Color(230, 230, 235));
@@ -174,7 +174,7 @@ public class FormatPanel extends JPanel {
 		formatButton.setPreferredSize(new Dimension(300, 70));
 		centerPanel.add(formatButton, GBCC);
 		
-		typeVideo = new FileNameExtensionFilter("video type file filter", allFormats);
+		typeVideo = new FileNameExtensionFilter("video type file filter", allVideoFormats);
 		
 		videoFileChooser.addActionListener(e -> {
 		
